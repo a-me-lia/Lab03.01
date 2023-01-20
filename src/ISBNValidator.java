@@ -13,9 +13,10 @@ public class ISBNValidator {
 
     /**
      * simple constructor; initializes arrays
+     * opens datastream from file
      */
     public ISBNValidator()  {
-        filename = "isbn_files/isbn1.dat";
+        filename = "isbn_files/isbn3.dat";
         int lines = 0;
         try {
             Scanner in = new Scanner(new File(filename));
@@ -34,6 +35,8 @@ public class ISBNValidator {
 
     /**
      * imports .dat file, calls isValidISBN method and stores Strings into corresponding arrays
+     * @params none
+     * @returns none
      */
     public void importData()    {
         try {
@@ -79,7 +82,9 @@ public class ISBNValidator {
          */
         isbn = isbn.replaceAll("-","");
         for(int i = 1; i < 14; i++){
-            num += Integer.parseInt(isbn.substring(i-1,i));
+            if(i % 2 == 0)
+            num += Integer.parseInt(isbn.substring(i-1,i)) * 3;
+            else num += Integer.parseInt(isbn.substring(i-1,i));
         }
         return num % 10 == 0 && (isbn.substring(0, 3).equals("979") || isbn.substring(0, 3).equals("978"));
     }
